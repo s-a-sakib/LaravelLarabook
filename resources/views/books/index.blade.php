@@ -1,34 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-    <table class="table table-success table-striped-columns">
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>isbn</th>
-            <th>price</th>
-            <th>stock</th>
-            <th>Actions</th>
-        </tr>
-        @foreach($books as $book)
-        <tr>
-            <td>{{$book->title}}</td>
-            <td>{{$book->author}}</td>
-            <td>{{$book->isbn}}</td>
-            <td>{{$book->price}}</td>
-            <td>{{$book->stock}}</td>
-        </tr>
-        @endforeach
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
 
+  <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center p-1">
+        <h2 class="mt-5">Book List</h2>
+        <a href="" class="btn btn-success mt-5">Add Book</a>
+    </div>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($books as $book)
+            <tr>
+                <td>{{$book->id}}</td>
+                <td>{{$book->isbn}}</td>
+                <td>{{$book->title}}</td>
+                <td>{{$book->author}}</td>
+                <td>
+                    <a href="{{route('show.book',$book->id)}}">View</a>
+                </td>
+            </tr>
+           @endforeach
+
+        </tbody>
     </table>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-</body>
+    {{$books->links()}}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
 </html>
