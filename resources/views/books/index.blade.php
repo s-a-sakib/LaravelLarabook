@@ -1,18 +1,24 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Book List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
+@extends('layout')
+@section('title')
+    <title>List of Books</title>
+@endsection
+@section('page-content')
 
   <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center p-1">
-        <h2 class="mt-5">Book List</h2>
-        <a href="{{ route('book.create') }}" class="btn btn-success mt-5">Add Book</a>
-    </div>
+      <div class="d-flex justify-content-between align-items-center p-1">
+          <h2 class="mt-5">
+              Book List
+          </h2>
+          <a class="btn btn-success mt-5" href="{{ route('book.create') }}">
+              Add Book
+          </a>
+      </div>
+      <form method="GET" action="{{route('list')}}" class="mb-3">
+          <div class="input-group">
+              <input type="text" id="search" name="search" class="form-control" placeholder="Search by title or author" aria-label="Search">
+              <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+      </form>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -46,6 +52,5 @@
     </table>
     {{$books->links()}}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
-</html>
+@endsection
+

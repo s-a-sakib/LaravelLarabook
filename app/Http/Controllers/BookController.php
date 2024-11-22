@@ -9,14 +9,39 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Nette\Utils\Html;
+use function Laravel\Prompts\select;
 
 class BookController extends Controller
 {
-    public function index(){
-        $books = Book::paginate(15);
-        //select * from Book where stock > 0;
-        return view('books.index')->with('books',$books);
+    public function index(Request $request){
+        $books = '';
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $books = Book::query()->where('title', 'LIKE', "%{$search}%")->
+            orWhere('author', 'LIKE', "%{$search}%");
+        }else{
+            $books = Book::query();
+        }
+        $books = $books->paginate(15);
+        return view('books.index')->with('books', $books);
     }
+//    public function index(Request $request) {
+//        $query = Book::query();
+//
+//        // Check if there is a search input
+//        if ($request->has('search')) {
+//            $search = $request->input('search');
+//            $query->where(function($q) use ($search) {
+//                $q->where('title', 'like', '%' . $search . '%')
+//                    ->orWhere('author', 'like', '%' . $search . '%');
+//            });
+//        }
+//
+//        // Paginate the results
+//        $books = $query->paginate(15);
+//
+//        return view('books.index')->with('books', $books);
+//    }
     public function show($id){
         $book = Book::find($id);
 

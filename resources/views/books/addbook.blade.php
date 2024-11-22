@@ -3,9 +3,10 @@
     <title>Add Book</title>
 @endsection
 @section('page-content')
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <a class="mt-5" href="{{route('list')}}"> Go Back </a>
                 <div class="card">
                     <div class="card-header">Add Book</div>
                     <div class="card-body">

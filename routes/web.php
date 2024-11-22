@@ -7,6 +7,7 @@ use App\Http\Controllers\BookController;
 //     return view('welcome');
 // });
 Route::get('/',[BookController::class, 'index']) -> name('list');
+Route::post('/',[BookController::class, 'index']) -> name('list');
 Route::get('/book/{id}/show',[BookController::class, 'show']) -> name('show.book');
 Route::get('/book/{id}/update', [BookController::class, 'edit'])->name('book.edit');
 Route::post('/book/{id}/update',[BookController::class, 'update'])->name('book.update');
