@@ -37,9 +37,8 @@ class BookController extends Controller
         return view('books.update')->with('book',$book);
     }
     public function update(Request $request){
-    
+
     $id = $request->id;
-    $book = Book::find($id);
     // Define validation rules
     $validator = Validator::make($request->all(), [
         'title' => 'required|string|max:255',
@@ -66,18 +65,27 @@ class BookController extends Controller
         'price'  => $request->input('price'),
         'isbn'   => $request->input('isbn'),
     ]);
-
+    $book = Book::find($id);
     return view('books.show')->with('book',$book);
-}
+    }
+    public function create(){
+        return view('books.addbook');
+    }
     public function addbook(Request $request){
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
-            'isbn'  => 'required|digits:13|unique|numeric',
+            'isbn'  => 'required|digits:13|unique:books,isbn|numeric',
         ]);
-    
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator) // Pass the validation errors back
+                ->withInput(); // Retain the old input
+        }
+
         DB::table('books')->insert([
         'title' => $request->input('title'),
         'author' => $request->input('author'),
@@ -85,6 +93,10 @@ class BookController extends Controller
         'price' => $request->input('price'),
         'isbn'  => $request->input('isbn'),
         ]);
+        $id = Book::where('isbn', $request->input('isbn'))->pluck('id')->first();
+        $books = Book::paginate(15);
+        return redirect()->route('list')->with('success', 'Successfully added new book with ID: ' . $id)
+            ->with('books', $books);
     }
 
     public function destroy($id){

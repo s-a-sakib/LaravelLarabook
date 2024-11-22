@@ -11,7 +11,7 @@
   <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center p-1">
         <h2 class="mt-5">Book List</h2>
-        <a href="" class="btn btn-success mt-5">Add Book</a>
+        <a href="{{ route('book.create') }}" class="btn btn-success mt-5">Add Book</a>
     </div>
     @if(session('success'))
         <div class="alert alert-success">
