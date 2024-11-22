@@ -72,4 +72,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
     DB_PORT=3306
     DB_DATABASE=your_database_name
     DB_USERNAME=your_database_admin_name
-    DB_PASSWORD=yout_database_password
+    DB_PASSWORD=your_database_password
